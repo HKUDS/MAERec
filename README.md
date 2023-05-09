@@ -1,6 +1,6 @@
 # MAERec
 
-This is the PyTorch implementation by [@HelloElwin](https://github.com/HelloElwin) for **MAERec** proposed in the paper [*Graph Masked Autoencoder for Sequential Recommendation*](https://arxiv.org/abs/2305.04619) published in SIGIR'23 by [Yaowen Ye](https://helloelwin.github.io/), [Lianghao Xia](https://akaxlh.github.io/), and [Chao Huang](https://sites.google.com/view/chaoh).
+This is the PyTorch implementation by [@HelloElwin](https://github.com/HelloElwin) for MAERec proposed in the paper [*Graph Masked Autoencoder for Sequential Recommendation*](https://arxiv.org/abs/2305.04619) published in SIGIR'23 by [Yaowen Ye](https://helloelwin.github.io/), [Lianghao Xia](https://akaxlh.github.io/), and [Chao Huang](https://sites.google.com/view/chaoh).
 
 <img width="1362" alt="model" src="https://user-images.githubusercontent.com/40925586/236808551-aaf34e77-8e97-4043-8c6b-e83dd5fd943b.png">
 
@@ -30,7 +30,7 @@ More explanation of model hyper-parameters can be found [here](./params.py).
 
 ### 4. Citing Information
 
-If you find this work is helpful to your research, please kindely consider cite our paper:
+If you find this work helpful to your research, please kindly consider citing our paper:
 
 ```
 @inproceedings{ye2023graph,
