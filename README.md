@@ -1,16 +1,16 @@
-# GMRec
+# MAERec
 
-This is the PyTorch implementation by [@HelloElwin](https://github.com/HelloElwin) for **GMRec** proposed in the paper [*Graph Masked Autoencoder for Sequential Recommendation*](https://arxiv.org/abs/2305.04619) published in SIGIR'23 by [Yaowen Ye](https://helloelwin.github.io/), [Lianghao Xia](https://akaxlh.github.io/), and [Chao Huang](https://sites.google.com/view/chaoh).
+This is the PyTorch implementation by [@HelloElwin](https://github.com/HelloElwin) for **MAERec** proposed in the paper [*Graph Masked Autoencoder for Sequential Recommendation*](https://arxiv.org/abs/2305.04619) published in SIGIR'23 by [Yaowen Ye](https://helloelwin.github.io/), [Lianghao Xia](https://akaxlh.github.io/), and [Chao Huang](https://sites.google.com/view/chaoh).
 
 <img width="1362" alt="model" src="https://user-images.githubusercontent.com/40925586/236808551-aaf34e77-8e97-4043-8c6b-e83dd5fd943b.png">
 
 ### 1. Introduction
 
-GMRec is a simple yet effective graph masked autoencoder that adaptively and dynamically distills global item transitional information for self-supervised augmentation through a novel **adaptive transition path masking** strategy. It naturally addresses the data scarcity and noise perturbation problems in sequential recommendation scenarios and avoids issues in most contrastive learning-based methods.
+MAERec is a simple yet effective graph masked autoencoder that adaptively and dynamically distills global item transitional information for self-supervised augmentation through a novel **adaptive transition path masking** strategy. It naturally addresses the data scarcity and noise perturbation problems in sequential recommendation scenarios and avoids issues in most contrastive learning-based methods.
 
 ### 2. Environment
 
-We suggest the following environment for running the model:
+We suggest the following environment for running MAERec:
 
 ```
 python==3.8.13
