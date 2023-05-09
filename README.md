@@ -28,7 +28,9 @@ Please first unzip the desired dataset in the dataset folder, and then run
 
 More explanation of model hyper-parameters can be found [here](./params.py).
 
-### 4. Citing our paper
+### 4. Citing Information
+
+If you find this work is helpful to your research, please kindely consider cite our paper:
 
 ```
 @inproceedings{ye2023graph,
