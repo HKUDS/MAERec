@@ -37,26 +37,26 @@ The dataset should be structured into four files for MAERec:
 - `neg` the negative samples for each test sequence
 - `trn` the i-i graph, which can be generated using the following code:
 
-  ```Python
-  def construct_graphs(num_items=54756, distance=3, path='./books/'):
-      with open(path + 'seq', 'rb') as fs:
-          seq = pickle.load(fs)
-      user = list()
-      r, c, d = list(), list(), list()
-      for i, seq in enumerate(seqs):
-          print(f"Processing {i}/{len(seqs)}          ", end='\r')
-          for dist in range(1, distance + 1):
-              if dist >= len(seq): break;
-              r += copy.deepcopy(seq[+dist:])
-              c += copy.deepcopy(seq[:-dist])
-              r += copy.deepcopy(seq[:-dist])
-              c += copy.deepcopy(seq[+dist:])
-      d = np.ones_like(r)
-      iigraph = csr_matrix((d, (r, c)), shape=(num_items, num_items))
-      print('Constructed i-i graph, density=%.6f' % (len(d) / (num_items ** 2)))
-      with open(prefix + 'trn', 'wb') as fs:
-          pickle.dump(iigraph, fs)
-  ```
+```Python
+def construct_graphs(num_items=54756, distance=3, path='./books/'):
+    with open(path + 'seq', 'rb') as fs:
+        seq = pickle.load(fs)
+    user = list()
+    r, c, d = list(), list(), list()
+    for i, seq in enumerate(seqs):
+        print(f"Processing {i}/{len(seqs)}          ", end='\r')
+        for dist in range(1, distance + 1):
+            if dist >= len(seq): break;
+            r += copy.deepcopy(seq[+dist:])
+            c += copy.deepcopy(seq[:-dist])
+            r += copy.deepcopy(seq[:-dist])
+            c += copy.deepcopy(seq[+dist:])
+    d = np.ones_like(r)
+    iigraph = csr_matrix((d, (r, c)), shape=(num_items, num_items))
+    print('Constructed i-i graph, density=%.6f' % (len(d) / (num_items ** 2)))
+    with open(prefix + 'trn', 'wb') as fs:
+        pickle.dump(iigraph, fs)
+```
 
 ### 5. Citing information
 
