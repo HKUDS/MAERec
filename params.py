@@ -3,6 +3,7 @@ import argparse
 def ParseArgs():
     parser = argparse.ArgumentParser(description='Model Params')
     parser.add_argument('--lr', default=1e-3, type=float, help='learning rate')
+    parser.add_argument('--seed', default=19260817, type=int, help='random seed')
     parser.add_argument('--data', default='books', type=str, help='name of dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of training epochs')
     parser.add_argument('--trn_batch', default=256, type=int, help='batch size training')

@@ -10,8 +10,7 @@ import time
 init = nn.init.xavier_uniform_
 uniform_init = nn.init.uniform
 
-def sparse_dropout(x, drop_prob):
-    keep_prob = 1 - drop_prob
+def sparse_dropout(x, keep_prob):
     msk = (t.rand(x._values().size()) + keep_prob).floor().type(t.bool)
     idx = x._indices()[:, msk]
     val = x._values()[msk]

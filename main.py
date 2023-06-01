@@ -1,4 +1,3 @@
-from setproctitle import setproctitle
 import logger as logger
 from params import args
 from logger import log
@@ -8,10 +7,11 @@ from utils import *
 import numpy as np
 import torch as t
 import pickle
-import time
-import copy
 import sys
 import os
+
+t.manual_seed(args.seed)
+np.random.seed(args.seed)
 
 class Coach:
     def __init__(self, handler):
@@ -45,9 +45,8 @@ class Coach:
             stloc = 0
             log('Model Initialized')
         bestRes = None
-        # reses = self.test_epoch()
+        reses = self.test_epoch()
         for ep in range(stloc, args.epoch):
-            t0 = time.time()
             tst_flag = (ep % args.test_frequency == 0)
             reses = self.train_epoch()
             log(self.make_print('Train', ep, reses, tst_flag))
@@ -64,7 +63,6 @@ class Coach:
         reses = self.test_epoch()
         log(self.make_print('Test', args.epoch, reses, True))
         log(self.make_print('Best Result', args.epoch, bestRes, True), bold=True)
-        # self.save_history()
 
     def prepare_model(self):
         self.encoder = Encoder().cuda()
@@ -114,9 +112,6 @@ class Coach:
         trn_loader = self.handler.trn_loader
         steps = trn_loader.dataset.__len__() // args.trn_batch
 
-        reward_his = []
-        grad_his = []
-
         for i, batch_data in enumerate(trn_loader):
 
             if i % args.mask_steps == 0:
@@ -141,18 +136,7 @@ class Coach:
             loss_his.append(loss_main)
 
             if i % args.mask_steps == 0:
-                loss_mask = -sample_scr.mean()
-                self.opt.zero_grad()
-                loss_mask.backward(retain_graph=True)
-                reco_grad = self.encoder.item_emb.grad.flatten().detach().cpu().numpy()
-                self.opt.zero_grad()
-                loss_main.backward(retain_graph=True)
-                main_grad = self.encoder.item_emb.grad.flatten().detach().cpu().numpy()
-                tar = np.argwhere(np.logical_and(main_grad != 0, reco_grad != 0))
-                main_grad = main_grad[tar] / np.linalg.norm(main_grad[tar])
-                reco_grad = reco_grad[tar] / np.linalg.norm(reco_grad[tar])
                 reward = calc_reward(loss_his, args.eps)
-                reward_his.append(reward)
                 loss_mask = -sample_scr.mean() * reward
                 ep_loss_mask += loss_mask
                 loss_his = loss_his[-1:]
@@ -184,7 +168,7 @@ class Coach:
         self.sampler.eval()
 
         tst_loader = self.handler.tst_loader
-        ep_loss, ep_h5, ep_n5, ep_h10, ep_n10, ep_h20, ep_n20, ep_h50, ep_n50  = [0] * 9
+        ep_h5, ep_n5, ep_h10, ep_n10, ep_h20, ep_n20, ep_h50, ep_n50  = [0] * 8
         group_h20 = [0] * 4
         group_n20 = [0] * 4
         group_num = [0] * 4
@@ -236,7 +220,7 @@ class Coach:
         ret['hr@10'] = ep_h10
         ret['ndcg@10'] = ep_n10
 
-        # print(f'Test result: h5={ep_h5:.4f} n5={ep_n5:.4f} h10={ep_h10:.4f} n10={ep_n10:.4f} h20={ep_h20:.4f} n20={ep_n20:.4f} h50={ep_h50:.4f} n50={ep_n50:.4f}')
+        print(f'Test result: h5={ep_h5:.4f} n5={ep_n5:.4f} h10={ep_h10:.4f} n10={ep_n10:.4f} h20={ep_h20:.4f} n20={ep_n20:.4f} h50={ep_h50:.4f} n50={ep_n50:.4f}')
 
         return ret
 
